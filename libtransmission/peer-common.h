@@ -9,6 +9,8 @@
 #error only libtransmission should #include this header.
 #endif
 
+#include "bandwidth.h"
+
 #include <array>
 #include <cstddef> // size_t
 #include <cstdint> // uint8_t, uint32_t, uint64_t
@@ -208,6 +210,7 @@ struct tr_peer
     explicit tr_peer(tr_torrent const& tor);
     virtual ~tr_peer() = default;
 
+    [[nodiscard]] virtual uint64_t get_total_bytes(tr_direction direction) const noexcept;
     [[nodiscard]] virtual Speed get_piece_speed(uint64_t now, tr_direction direction) const = 0;
 
     [[nodiscard]] bool has_piece(tr_piece_index_t piece) const noexcept

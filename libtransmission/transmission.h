@@ -1195,6 +1195,9 @@ struct tr_peer_stat
     double rateToPeer_KBps;
     double rateToClient_KBps;
 
+    double trafficToPeer_Bytes;
+    double trafficToClient_Bytes;
+
     // THESE NEXT FOUR FIELDS ARE EXPERIMENTAL.
     // Don't rely on them; they'll probably go away
     /* how many blocks we've sent to this peer in the last 120 seconds */

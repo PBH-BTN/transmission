@@ -350,7 +350,12 @@ public:
 
     // ---
 
-    [[nodiscard]] Speed get_piece_speed(uint64_t now, tr_direction dir) const override
+    [[nodiscard]] uint64_t tr_peer::get_total_bytes(tr_direction direction) const noexcept override
+    {
+        return io_->total_traffic(direction);
+    }
+
+    [[nodiscard]] Speed get_piece_speed(uint64_t now, tr_direction dir) const noexcept override
     {
         return io_->get_piece_speed(now, dir);
     }

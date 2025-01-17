@@ -109,6 +109,12 @@ public:
 
     void set_enabled(tr_direction dir, bool is_enabled);
 
+
+    uint64_t tr_peerIo::total_traffic(tr_direction direction) const
+    {
+        return bandwidth_.total_traffic(direction);
+    }
+
     ///
 
     [[nodiscard]] TR_CONSTEXPR20 auto read_buffer_size() const noexcept

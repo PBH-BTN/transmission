@@ -61,7 +61,7 @@ Speed tr_bandwidth::get_speed(RateControl& r, unsigned int interval_msec, uint64
     return r.cache_val_;
 }
 
-void tr_bandwidth::notify_bandwidth_consumed_bytes(uint64_t const now, RateControl& r, size_t size)
+void tr_bandwidth::notify_bandwidth_consumed_bytes(tr_bandwidth* parent, uint64_t const now, RateControl& r, size_t size)
 {
     if (r.date_[r.newest_] + GranularityMSec >= now)
     {
@@ -80,6 +80,9 @@ void tr_bandwidth::notify_bandwidth_consumed_bytes(uint64_t const now, RateContr
 
     /* invalidate cache_val*/
     r.cache_time_ = 0U;
+
+    /* update total_bytes_ */
+    parent->total_bytes_[&r == &parent->band_[TR_UP].raw_ ? TR_UP : TR_DOWN] += size;
 }
 
 // ---
@@ -120,6 +123,11 @@ void tr_bandwidth::deparent() noexcept
 
     remove_child(parent_->children_, this);
     parent_ = nullptr;
+}
+
+uint64_t tr_bandwidth::total_traffic(tr_direction direction) const
+{
+    return total_bytes_[direction];
 }
 
 void tr_bandwidth::set_parent(tr_bandwidth* new_parent)
@@ -300,11 +308,11 @@ void tr_bandwidth::notify_bandwidth_consumed(tr_direction dir, size_t byte_count
 
     if (is_piece_data)
     {
-        notify_bandwidth_consumed_bytes(now, band.piece_, byte_count);
+        notify_bandwidth_consumed_bytes(this, now, band.piece_, byte_count);
     }
     else
     {
-        notify_bandwidth_consumed_bytes(now, band.raw_, byte_count);
+        notify_bandwidth_consumed_bytes(this, now, band.raw_, byte_count);
 
         if (band.is_limited_)
         {

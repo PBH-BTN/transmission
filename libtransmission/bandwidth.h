@@ -84,7 +84,12 @@ private:
     static constexpr auto GranularityMSec = 250U;
     static constexpr auto HistorySize = HistoryMSec / GranularityMSec;
 
+    std::array<uint64_t, 2> total_bytes_ = {0, 0};
+
 public:
+
+
+    uint64_t total_traffic(tr_direction direction) const;
     explicit tr_bandwidth(tr_bandwidth* parent, bool is_group = false);
 
     explicit tr_bandwidth(bool is_group = false)
@@ -259,7 +264,7 @@ private:
 
     void deparent() noexcept;
 
-    static void notify_bandwidth_consumed_bytes(uint64_t now, RateControl& r, size_t size);
+    static void notify_bandwidth_consumed_bytes(tr_bandwidth* parent, uint64_t now, RateControl& r, size_t size);
 
     static void phase_one(std::vector<tr_peerIo*>& peers, tr_direction dir);
 
