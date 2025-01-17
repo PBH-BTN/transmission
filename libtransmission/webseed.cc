@@ -204,7 +204,10 @@ public:
         stop();
     }
 
-    [[nodiscard]] uint64_t tr_peer::get_total_bytes(tr_direction direction) const noexcept override;
+    [[nodiscard]] uint64_t get_total_bytes(tr_direction direction) const noexcept override
+    {
+        return bandwidth_.total_traffic(direction);
+    }
 
     [[nodiscard]] Speed get_piece_speed(uint64_t now, tr_direction dir) const override
     {
@@ -373,10 +376,6 @@ private:
 
 // ---
 
-uint64_t tr_webseed_impl::get_total_bytes(tr_direction direction) const noexcept
-{
-    return bandwidth_.total_traffic(direction);
-}
 
 void tr_webseed_task::use_fetched_blocks()
 {

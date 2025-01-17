@@ -350,7 +350,7 @@ public:
 
     // ---
 
-    [[nodiscard]] uint64_t tr_peer::get_total_bytes(tr_direction direction) const noexcept override
+    [[nodiscard]] uint64_t tr_peerMsgs::get_total_bytes(tr_direction direction) const noexcept override
     {
         return io_->total_traffic(direction);
     }
