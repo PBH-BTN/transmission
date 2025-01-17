@@ -1195,8 +1195,8 @@ struct tr_peer_stat
     double rateToPeer_KBps;
     double rateToClient_KBps;
 
-    double trafficToPeer_Bytes;
-    double trafficToClient_Bytes;
+    double bytesToPeer;
+    double bytesToClient;
 
     // THESE NEXT FOUR FIELDS ARE EXPERIMENTAL.
     // Don't rely on them; they'll probably go away

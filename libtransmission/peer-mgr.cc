@@ -1699,8 +1699,8 @@ namespace peer_stat_helpers
     stats.isEncrypted = peer->is_encrypted();
     stats.rateToPeer_KBps = peer->get_piece_speed(now_msec, TR_CLIENT_TO_PEER).count(Speed::Units::KByps);
     stats.rateToClient_KBps = peer->get_piece_speed(now_msec, TR_PEER_TO_CLIENT).count(Speed::Units::KByps);
-    stats.trafficToPeer_Bytes = peer->get_total_bytes(TR_CLIENT_TO_PEER);
-    stats.trafficToClient_Bytes = peer->get_total_bytes(TR_PEER_TO_CLIENT);
+    stats.bytesToPeer = peer->get_total_bytes(TR_CLIENT_TO_PEER);
+    stats.bytesToClient = peer->get_total_bytes(TR_PEER_TO_CLIENT);
     stats.peerIsChoked = peer->peer_is_choked();
     stats.peerIsInterested = peer->peer_is_interested();
     stats.clientIsChoked = peer->client_is_choked();
